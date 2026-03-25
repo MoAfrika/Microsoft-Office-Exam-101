@@ -4,53 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faith Academy Assessment Engine</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS with Dark Mode Class Configuration -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        /* Custom scrollbar to match the sleek dark theme */
+        /* Custom scrollbar adaptable to theme */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
         
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen antialiased selection:bg-indigo-500/30">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 min-h-screen antialiased selection:bg-indigo-500/30 transition-colors duration-300">
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors z-50">
+        <i id="theme-icon" class="ph ph-moon text-xl"></i>
+    </button>
 
     <!-- START SCREEN -->
-    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4 fade-in">
-        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl p-8 border border-slate-700">
+    <div id="start-screen" class="min-h-screen flex items-center justify-center p-4 animate-fade-in">
+        <div class="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-8 border border-slate-200 dark:border-slate-700 transition-colors">
             <div class="flex justify-center mb-6">
-                <div class="bg-indigo-500/20 p-4 rounded-full">
-                    <i class="ph ph-brain text-5xl text-indigo-400"></i>
+                <div class="bg-indigo-100 dark:bg-indigo-500/20 p-4 rounded-full transition-colors">
+                    <i class="ph ph-brain text-5xl text-indigo-600 dark:text-indigo-400"></i>
                 </div>
             </div>
             <h1 class="text-2xl font-bold text-center mb-2">Faith Academy</h1>
-            <h2 class="text-lg text-slate-400 text-center mb-8">Digital Skills Assessment Engine</h2>
+            <h2 class="text-lg text-slate-500 dark:text-slate-400 text-center mb-8">Digital Skills Assessment Engine</h2>
             
-            <div class="space-y-4 mb-8 text-sm text-slate-300">
-                <p class="flex items-center"><i class="ph-fill ph-lightning text-yellow-400 text-base mr-3"></i> Adaptive difficulty based on your answers.</p>
-                <p class="flex items-center"><i class="ph-fill ph-clock text-rose-400 text-base mr-3"></i> Strict time pressure. Speed matters.</p>
-                <p class="flex items-center"><i class="ph-fill ph-target text-emerald-400 text-base mr-3"></i> Real-world mission simulations.</p>
+            <div class="space-y-4 mb-8 text-sm text-slate-600 dark:text-slate-300">
+                <p class="flex items-center"><i class="ph-fill ph-lightning text-yellow-500 dark:text-yellow-400 text-base mr-3"></i> 40 Adaptive missions based on your answers.</p>
+                <p class="flex items-center"><i class="ph-fill ph-clock text-rose-500 dark:text-rose-400 text-base mr-3"></i> 30-Minute strict time pressure limit.</p>
+                <p class="flex items-center"><i class="ph-fill ph-target text-emerald-500 dark:text-emerald-400 text-base mr-3"></i> Tests beginner to solid intermediate execution.</p>
             </div>
 
             <form id="start-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-slate-400 mb-1">Candidate Name</label>
+                    <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Candidate Name</label>
                     <input 
                         type="text" 
                         id="candidate-name"
                         required
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                        class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
                         placeholder="Enter your full name"
                     />
                 </div>
@@ -65,49 +84,49 @@
     </div>
 
     <!-- PLAYING SCREEN -->
-    <div id="playing-screen" class="hidden min-h-screen p-4 md:p-8 fade-in">
-        <div class="max-w-3xl mx-auto">
+    <div id="playing-screen" class="hidden min-h-screen p-4 md:p-8 animate-fade-in">
+        <div class="max-w-3xl mx-auto mt-8">
             
             <!-- HUD (Heads Up Display) -->
-            <div class="flex flex-wrap items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700 mb-6 gap-4">
+            <div class="flex flex-wrap items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 mb-6 gap-4 shadow-sm transition-colors">
                 <div class="flex items-center space-x-4">
-                    <div class="bg-slate-900 px-4 py-2 rounded-lg border border-slate-700">
-                        <span class="text-xs text-slate-400 block uppercase tracking-wider">Mission</span>
-                        <span class="font-bold" id="mission-progress">1 / 3</span>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 block uppercase tracking-wider">Mission</span>
+                        <span class="font-bold text-slate-800 dark:text-white" id="mission-progress">1 / 40</span>
                     </div>
-                    <div class="bg-slate-900 px-4 py-2 rounded-lg border border-slate-700">
-                        <span class="text-xs text-slate-400 block uppercase tracking-wider">Complexity Tier</span>
+                    <div class="bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 block uppercase tracking-wider">Complexity Tier</span>
                         <div class="flex items-center">
-                            <span class="font-bold mr-2" id="current-tier-text">Level 1</span>
+                            <span class="font-bold mr-2 text-slate-800 dark:text-white" id="current-tier-text">Level 1</span>
                             <div class="flex space-x-1" id="tier-indicators">
                                 <!-- Generated via JS -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="timer-container" class="px-4 py-2 rounded-lg border bg-slate-900 border-slate-700 transition-colors">
-                    <span class="text-xs block uppercase tracking-wider mb-1">Time Remaining</span>
-                    <div class="flex items-center font-mono text-xl font-bold" id="timer-text">
+                <div id="timer-container" class="px-4 py-2 rounded-lg border bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 transition-colors">
+                    <span class="text-xs block uppercase tracking-wider mb-1 text-slate-500 dark:text-slate-400">Time Remaining</span>
+                    <div class="flex items-center font-mono text-xl font-bold text-slate-800 dark:text-white" id="timer-text">
                         <i class="ph ph-clock mr-2 text-xl"></i>
-                        <span id="time-display">2:00</span>
+                        <span id="time-display">30:00</span>
                     </div>
                 </div>
             </div>
 
             <!-- Mission Briefing -->
-            <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden mb-6">
-                <div class="bg-indigo-600/10 border-b border-indigo-500/20 px-6 py-4 flex items-start">
-                    <i class="ph ph-target text-2xl text-indigo-400 mt-1 mr-3 flex-shrink-0"></i>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden mb-6 shadow-sm transition-colors">
+                <div class="bg-indigo-50 dark:bg-indigo-600/10 border-b border-indigo-100 dark:border-indigo-500/20 px-6 py-4 flex items-start transition-colors">
+                    <i class="ph ph-target text-2xl text-indigo-600 dark:text-indigo-400 mt-1 mr-3 flex-shrink-0"></i>
                     <div>
-                        <h3 class="text-indigo-300 text-sm font-semibold tracking-wider uppercase" id="mission-domain">Domain</h3>
-                        <h2 class="text-xl font-bold mt-1" id="mission-context">Context</h2>
+                        <h3 class="text-indigo-600 dark:text-indigo-300 text-sm font-semibold tracking-wider uppercase" id="mission-domain">Domain</h3>
+                        <h2 class="text-xl font-bold mt-1 text-slate-800 dark:text-white" id="mission-context">Context</h2>
                     </div>
                 </div>
                 <div class="p-6">
-                    <div class="bg-slate-900 rounded-lg p-5 border border-slate-700 mb-6">
-                        <p class="text-lg leading-relaxed" id="mission-task">Task description goes here.</p>
-                        <span class="inline-block mt-3 text-xs font-medium px-2 py-1 rounded bg-slate-800 text-slate-400 border border-slate-700" id="mission-target">
-                            Target: Basic
+                    <div class="bg-slate-50 dark:bg-slate-900 rounded-lg p-5 border border-slate-200 dark:border-slate-700 mb-6 transition-colors">
+                        <p class="text-lg leading-relaxed text-slate-700 dark:text-slate-200" id="mission-task">Task description goes here.</p>
+                        <span class="inline-block mt-3 text-xs font-medium px-2 py-1 rounded bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700" id="mission-target">
+                            Target: Beginner
                         </span>
                     </div>
 
@@ -121,72 +140,72 @@
     </div>
 
     <!-- RESULTS SCREEN -->
-    <div id="results-screen" class="hidden min-h-screen py-12 px-4 fade-in">
+    <div id="results-screen" class="hidden min-h-screen py-12 px-4 animate-fade-in">
         <div class="max-w-2xl mx-auto space-y-6">
             
             <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/20 text-emerald-400 mb-4">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 mb-4 transition-colors">
                     <i class="ph-fill ph-medal text-5xl"></i>
                 </div>
-                <h1 class="text-3xl font-bold">Assessment Complete</h1>
-                <p class="text-slate-400 mt-2">Candidate: <span class="text-white font-medium" id="result-candidate-name"></span></p>
+                <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Assessment Complete</h1>
+                <p class="text-slate-600 dark:text-slate-400 mt-2">Candidate: <span class="text-slate-900 dark:text-white font-medium" id="result-candidate-name"></span></p>
             </div>
 
             <!-- Intelligence Certificate Card -->
-            <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-2xl relative">
-                <div class="absolute top-0 right-0 p-4 opacity-10">
-                    <i class="ph-fill ph-brain text-[12rem]"></i>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-xl dark:shadow-2xl relative transition-colors">
+                <div class="absolute top-0 right-0 p-4 opacity-5 dark:opacity-10 pointer-events-none">
+                    <i class="ph-fill ph-brain text-[12rem] text-slate-900 dark:text-white"></i>
                 </div>
                 
                 <div class="p-8 relative z-10">
-                    <h2 class="text-sm font-bold tracking-widest text-indigo-400 uppercase mb-6 border-b border-slate-700 pb-2">Verified Intelligence Rating</h2>
+                    <h2 class="text-sm font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase mb-6 border-b border-slate-200 dark:border-slate-700 pb-2 transition-colors">Verified Capability Rating</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div>
-                            <div class="text-slate-400 text-sm mb-1">Execution Accuracy</div>
-                            <div class="text-4xl font-bold flex items-end">
+                            <div class="text-slate-500 dark:text-slate-400 text-sm mb-1">Execution Accuracy</div>
+                            <div class="text-4xl font-bold flex items-end text-slate-900 dark:text-white">
                                 <span id="score-accuracy">0</span>%
-                                <span class="text-sm font-normal text-slate-500 ml-2 mb-1" id="score-raw">(0/0)</span>
+                                <span class="text-sm font-normal text-slate-400 dark:text-slate-500 ml-2 mb-1" id="score-raw">(0/0)</span>
                             </div>
                         </div>
                         <div>
-                            <div class="text-slate-400 text-sm mb-1">Cognitive Depth (Tier)</div>
-                            <div class="text-4xl font-bold flex items-end">
+                            <div class="text-slate-500 dark:text-slate-400 text-sm mb-1">Cognitive Depth (Tier)</div>
+                            <div class="text-4xl font-bold flex items-end text-slate-900 dark:text-white">
                                 <span id="score-tier">1.0</span>
-                                <span class="text-sm font-normal text-slate-500 ml-2 mb-1">/ 3.0</span>
+                                <span class="text-sm font-normal text-slate-400 dark:text-slate-500 ml-2 mb-1">/ 3.0</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 flex items-center">
-                            <i class="ph-fill ph-brain text-2xl text-indigo-400 mr-4"></i>
+                        <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700 flex items-center transition-colors">
+                            <i class="ph-fill ph-brain text-2xl text-indigo-600 dark:text-indigo-400 mr-4"></i>
                             <div>
-                                <div class="text-sm text-slate-400">Logic Profile</div>
-                                <div class="font-bold text-lg text-white" id="profile-logic">Standard</div>
+                                <div class="text-sm text-slate-500 dark:text-slate-400">Skill Profile</div>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white" id="profile-logic">Standard</div>
                             </div>
                         </div>
-                        <div class="bg-slate-900 rounded-xl p-4 border border-slate-700 flex items-center">
-                            <i class="ph-fill ph-lightning text-2xl text-yellow-400 mr-4"></i>
+                        <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700 flex items-center transition-colors">
+                            <i class="ph-fill ph-lightning text-2xl text-yellow-500 dark:text-yellow-400 mr-4"></i>
                             <div>
-                                <div class="text-sm text-slate-400">Speed Profile</div>
-                                <div class="font-bold text-lg text-white" id="profile-speed">Average (0s / task)</div>
+                                <div class="text-sm text-slate-500 dark:text-slate-400">Execution Speed</div>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white" id="profile-speed">Average (0s / task)</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="bg-indigo-900/40 p-6 border-t border-slate-700 flex items-start">
-                    <i class="ph-fill ph-warning-circle text-xl text-indigo-300 mr-3 mt-0.5"></i>
-                    <p class="text-sm text-indigo-200">
-                        This is a dynamically generated certificate based on simulated real-world tasks under time pressure. The adaptive engine guarantees no two assessments are identical, validating true capability over rote memorization.
+                <div class="bg-indigo-50 dark:bg-indigo-900/40 p-6 border-t border-indigo-100 dark:border-slate-700 flex items-start transition-colors">
+                    <i class="ph-fill ph-check-circle text-xl text-indigo-600 dark:text-indigo-300 mr-3 mt-0.5"></i>
+                    <p class="text-sm text-indigo-800 dark:text-indigo-200">
+                        This certificate measures proficiency ranging from absolute beginner foundations to solid intermediate execution under moderate time pressure.
                     </p>
                 </div>
             </div>
 
             <button 
                 id="restart-btn"
-                class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium py-4 px-6 rounded-xl transition-colors flex items-center justify-center mt-6"
+                class="w-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-medium py-4 px-6 rounded-xl transition-colors flex items-center justify-center mt-6 shadow-sm"
             >
                 <i class="ph ph-arrows-clockwise text-xl mr-2"></i> Start New Assessment
             </button>
@@ -195,45 +214,90 @@
 
     <!-- ENGINE LOGIC -->
     <script>
-        // --- DYNAMIC QUESTION BANK (Anti-cheating & Adaptive Logic) ---
-        const missionBank = [
-            {
-                id: 1,
-                domain: 'Excel Data Analysis',
-                context: "Mission: Sales Dataset Optimization",
-                tiers: {
-                    1: { level: "Basic", task: "Calculate the total revenue from the raw 'Sales' column.", options: ["=TOTAL(Sales)", "=SUM(Sales)", "=ADD(Sales)", "=SUM_ALL(Sales)"], correctIndex: 1 },
-                    2: { level: "Application", task: "Calculate total revenue ONLY for the 'Electronics' department.", options: ["=SUM(Sales, 'Electronics')", "=IF(Dept='Electronics', SUM(Sales))", "=SUMIF(Dept, \"Electronics\", Sales)", "=TOTALIF(Dept, \"Electronics\", Sales)"], correctIndex: 2 },
-                    3: { level: "Real-World Problem", task: "Fix #N/A errors in the dataset, AND calculate conditional totals for 'Electronics' ignoring those errors.", options: ["=SUMIF(Dept, \"Electronics\", IFERROR(Sales, 0))", "=SUMIFS(Sales, Dept, \"Electronics\", Sales, \"<>#N/A\")", "=AGGREGATE(9, 6, (Dept=\"Electronics\")*Sales)", "Both B and C will work in modern Excel"], correctIndex: 3 }
-                }
-            },
-            {
-                id: 2,
-                domain: 'Professional Reporting (Word)',
-                context: "Mission: Executive Summary Formatting",
-                tiers: {
-                    1: { level: "Basic", task: "Apply a consistent heading style to all section titles.", options: ["Manually bold and increase font size for each", "Select text -> Home -> Styles -> Heading 1", "Use the Format Painter tool repeatedly", "Insert -> Text Box -> Format"], correctIndex: 1 },
-                    2: { level: "Application", task: "Generate an automatic Table of Contents that updates when pages change.", options: ["Type it manually with dotted leaders", "References -> Table of Contents -> Automatic Table", "Insert -> Index -> Table", "Layout -> Auto-Summary"], correctIndex: 1 },
-                    3: { level: "Real-World Problem", task: "The document has mixed formatting from 3 different authors. How do you unify it instantly without losing bold/italic emphasis?", options: ["Select All -> Clear All Formatting", "Paste into Notepad and paste back", "Select All -> Apply Normal Style, then manually fix emphasis", "Use 'Find and Replace' to find specific formats and replace with established Styles"], correctIndex: 3 }
-                }
-            },
-            {
-                id: 3,
-                domain: 'Presentation Logic (PowerPoint)',
-                context: "Mission: Pitch Deck Transformation",
-                tiers: {
-                    1: { level: "Basic", task: "Change the layout of a slide from 'Title' to 'Two Content'.", options: ["Delete everything and add two text boxes", "Home -> Layout -> Two Content", "Insert -> Layout Template", "Design -> Slide Size"], correctIndex: 1 },
-                    2: { level: "Application", task: "Ensure a company logo appears in the exact same spot on every single slide automatically.", options: ["Copy and paste the logo onto every slide", "Insert it into the Slide Master", "Use the 'Duplicate Slide' function only", "Set it as the slide background image"], correctIndex: 1 },
-                    3: { level: "Real-World Problem", task: "You have raw text bullet points that need to look like a process flow. Fastest method?", options: ["Draw shapes manually and copy-paste text", "Use SmartArt: Convert to SmartArt Graphic -> Process", "Download an external template and retype", "Use Morph transition on text boxes"], correctIndex: 1 }
-                }
+        // --- THEME MANAGEMENT ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.replace('ph-moon', 'ph-sun');
+                localStorage.theme = 'dark';
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.replace('ph-sun', 'ph-moon');
+                localStorage.theme = 'light';
             }
+        }
+
+        // Initialize theme based on user preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            setTheme(!htmlElement.classList.contains('dark'));
+        });
+
+        // --- 40-QUESTION BANK (Beginner to Intermediate) ---
+        // Tier 1 = Beginner | Tier 2 = Adv. Beginner | Tier 3 = Intermediate
+        const missionBank = [
+            { id: 1, domain: 'Data Lookup (Excel)', context: "Finding Values", tiers: { 1: { level: "Beginner", task: "You need to find a price based on a product ID. Which function is used for basic vertical lookup?", options: ["=HLOOKUP", "=VLOOKUP", "=SEARCH", "=FIND"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "Your VLOOKUP is returning close but wrong answers. How do you force it to find an EXACT match?", options: ["Sort the data first", "Add 'FALSE' or '0' as the final argument", "Use =EXACTLOOKUP", "Change the cell format to Text"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need to lookup a value, but the Product ID is located to the RIGHT of the result column. What is the modern solution?", options: ["Copy and paste columns to reorder them", "=VLOOKUP(ID, Table, -1, FALSE)", "=XLOOKUP(ID, ID_Range, Result_Range)", "It's impossible without macros"], correctIndex: 2 }}},
+            { id: 2, domain: 'Data Cleaning (Excel)', context: "Formatting Messy Text", tiers: { 1: { level: "Beginner", task: "How do you quickly merge the text of cell A1 (First Name) and B1 (Last Name) with a space between them?", options: ["=A1 + B1", "=A1 & \" \" & B1", "=MERGE(A1, B1)", "Use the 'Merge & Center' button"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "A copied list of names has random extra spaces before and after the text. Which function fixes this?", options: ["=CLEAN()", "=REMOVE_SPACES()", "=TRIM()", "Find and replace all spaces"], correctIndex: 2 }, 3: { level: "Intermediate", task: "You have a single column containing 'LastName, FirstName'. How do you split this into two separate columns instantly?", options: ["Manually retype them", "Data -> Text to Columns", "Format as Table", "Use =SPLIT()"], correctIndex: 1 }}},
+            { id: 3, domain: 'Conditional Logic (Excel)', context: "Decision Making", tiers: { 1: { level: "Beginner", task: "Which formula outputs 'Pass' if cell C2 is greater than 50, and 'Fail' if it is not?", options: ["=IF(C2>50, \"Pass\", \"Fail\")", "=CHOOSE(C2>50, \"Pass\", \"Fail\")", "=TEST(C2>50)", "=IF(C2>50) THEN 'Pass' ELSE 'Fail'"], correctIndex: 0 }, 2: { level: "Adv. Beginner", task: "How do you highlight a cell red ONLY if the value drops below zero?", options: ["Change font color to red", "Use Conditional Formatting -> Highlight Cell Rules -> Less Than", "Use =IF(<0, RED)", "Select all negative numbers manually"], correctIndex: 1 }, 3: { level: "Intermediate", task: "How do you sum up sales ONLY for the 'East' region?", options: ["Sort by East, then use AutoSum", "=SUM(East_Column)", "=SUMIF(Region_Range, \"East\", Sales_Range)", "=TOTALIF(\"East\")"], correctIndex: 2 }}},
+            { id: 4, domain: 'Aggregation (Excel)', context: "Summarizing Data", tiers: { 1: { level: "Beginner", task: "What is the fastest way to add up a long column of numbers?", options: ["Type =A1+A2+A3...", "Select them and use the AutoSum (Σ) button", "Use the Subtotal tool", "Export to a calculator"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You need to see average sales by region without writing complex formulas. What is the best tool?", options: ["Subtotals", "Insert a PivotTable", "Conditional Formatting", "Data Validation"], correctIndex: 1 }, 3: { level: "Intermediate", task: "In a PivotTable, how do you change a \"Sum of Sales\" column to show as \"Percentages of the Grand Total\"?", options: ["Right-click a value -> Show Values As -> % of Grand Total", "Add a new column in the raw data dividing by the total", "This requires a Calculated Field", "Use the % format button on the Home tab"], correctIndex: 0 }}},
+            { id: 5, domain: 'Data Protection (Excel)', context: "Preventing Errors", tiers: { 1: { level: "Beginner", task: "How do you freeze the top header row so it stays visible when scrolling down?", options: ["Split the window", "View -> Freeze Panes -> Freeze Top Row", "Select row and click 'Lock'", "Print Titles"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you force users to only select 'Yes' or 'No' from a dropdown menu in a specific cell?", options: ["Type 'Yes/No' in the header", "Insert a Checkbox shape", "Data -> Data Validation -> Allow: List", "Protect the Sheet"], correctIndex: 2 }, 3: { level: "Intermediate", task: "You want to share a sheet but prevent anyone from accidentally deleting formulas, while still letting them enter data into blank cells.", options: ["Save it as a PDF", "Unlock the blank cells, then use Review -> Protect Sheet", "Hide the formula rows", "Turn on 'Track Changes'"], correctIndex: 1 }}},
+            { id: 6, domain: 'Word Formatting', context: "Document Structure", tiers: { 1: { level: "Beginner", task: "What is the proper way to start text on a new page?", options: ["Press Enter repeatedly until a new page appears", "Insert -> Page Break (or Ctrl+Enter)", "Change margins", "Increase line spacing"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you ensure a company logo appears at the top of every single page automatically?", options: ["Copy and paste it on every page", "Insert it into the Header", "Set it as a watermark", "Make it the page background"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You want your document title to start on page 1, but page numbers should only start displaying on page 2. How?", options: ["Header & Footer -> Check 'Different First Page'", "Manually cover the first number with a white shape", "Save the title page as a separate document", "It cannot be done in Word"], correctIndex: 0 }}},
+            { id: 7, domain: 'Word Layouts', context: "Managing Space", tiers: { 1: { level: "Beginner", task: "How do you change the page orientation from Portrait to Landscape?", options: ["View -> Zoom Out", "Layout -> Orientation", "Home -> Paragraph", "Design -> Page Color"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You pasted an image, but you can't drag it freely around the text. How do you fix this?", options: ["Change the image format to PNG", "Click the image -> Wrap Text -> 'Tight' or 'Square'", "Use the spacebar to push it", "Put it inside a table"], correctIndex: 1 }, 3: { level: "Intermediate", task: "How do you make only ONE page in the middle of your document Landscape, while the rest stay Portrait?", options: ["Select the page text -> Layout -> Orientation -> Apply to 'Selected Text'", "Insert a 'Next Page' Section Break before and after the page, then change orientation", "You must use two separate Word files", "Change the print settings"], correctIndex: 1 }}},
+            { id: 8, domain: 'Word Automation', context: "Styles & References", tiers: { 1: { level: "Beginner", task: "Instead of manually making every chapter title Arial, Size 16, Bold, what should you use?", options: ["Format Painter", "Select All", "Styles (e.g., Heading 1)", "WordArt"], correctIndex: 2 }, 2: { level: "Adv. Beginner", task: "How do you generate an automatic Table of Contents?", options: ["Type it manually with dots", "References -> Table of Contents (Requires Heading Styles)", "Insert -> Index", "Layout -> Summary"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need to send the same letter to 50 different clients with their names automatically filled in. What feature is this?", options: ["Find and Replace", "Mail Merge", "AutoText", "Document Inspector"], correctIndex: 1 }}},
+            { id: 9, domain: 'PowerPoint Basics', context: "Slide Creation", tiers: { 1: { level: "Beginner", task: "How do you add a new slide with a layout for two pictures side-by-side?", options: ["Add a blank slide and draw boxes", "Home -> New Slide -> 'Two Content'", "Insert -> SmartArt", "View -> Slide Sorter"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you change the background color of all slides at once?", options: ["Design tab -> Format Background -> Apply to All", "Copy and paste a colored square", "Select all slides and use the Fill bucket", "Change the theme font"], correctIndex: 0 }, 3: { level: "Intermediate", task: "How do you permanently change the default font and logo position for every new slide you ever create in this presentation?", options: ["Select all slides and change it", "View -> Slide Master -> Edit the top parent slide", "Save the presentation as a template", "It must be done slide by slide"], correctIndex: 1 }}},
+            { id: 10, domain: 'PowerPoint Delivery', context: "Presenting", tiers: { 1: { level: "Beginner", task: "What is the shortcut to start a presentation from the very beginning?", options: ["F5", "Enter", "Spacebar", "Ctrl+P"], correctIndex: 0 }, 2: { level: "Adv. Beginner", task: "How can you read your notes privately on your laptop while the audience only sees the slides on the projector?", options: ["Print them out", "Slide Show -> Use Presenter View", "Memorize them", "Use dual monitors and a Word doc"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You want 3 bullet points to appear one by one when you click, rather than all at once. How?", options: ["Put them on 3 separate slides", "Select text box -> Animations -> 'Fade' -> Effect Options: 'By Paragraph'", "Transitions -> Push", "Use the 'Delay' timer"], correctIndex: 1 }}},
+            
+            // Adding 30 more to hit 40
+            { id: 11, domain: 'File Management', context: "Organizing Assets", tiers: { 1: { level: "Beginner", task: "What does it mean to 'Zip' a folder?", options: ["Delete it permanently", "Compress it to save space and make it one file for emailing", "Encrypt it with a password", "Upload it to the cloud"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you select multiple files that are NOT next to each other in a folder?", options: ["Hold Shift and click", "Hold Ctrl (or Cmd) and click", "Draw a box around them", "Press Alt+A"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need to find a document but only remember it was modified last week and is a PDF. Best search method?", options: ["Scroll through 'Recent'", "In the search bar type: '*.pdf' and sort by Date Modified", "Search the Recycle bin", "Open Adobe Reader"], correctIndex: 1 }}},
+            { id: 12, domain: 'Cloud Storage (OneDrive/Drive)', context: "Collaboration", tiers: { 1: { level: "Beginner", task: "What is the main advantage of saving a file to OneDrive/Google Drive instead of your Desktop?", options: ["It prevents viruses", "It can be accessed from any device with internet", "It makes the computer faster", "It automatically translates text"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You want to send a file to a client but it's too large for email (50MB). What do you do?", options: ["Zip it 5 times", "Copy paste the text into the email body", "Upload to Cloud storage and share a 'View Only' link", "Print and mail it"], correctIndex: 2 }, 3: { level: "Intermediate", task: "A coworker accidentally deleted a paragraph in a shared Cloud document yesterday. How do you recover it?", options: ["Press Ctrl+Z", "Check the local Recycle Bin", "File -> Version History -> Restore previous version", "It is permanently lost"], correctIndex: 2 }}},
+            { id: 13, domain: 'Email Etiquette & Logic', context: "Professional Comms", tiers: { 1: { level: "Beginner", task: "What does 'BCC' stand for in an email?", options: ["Before Carbon Copy", "Blind Carbon Copy (hides recipients from each other)", "Basic Contact Copy", "Backup Carbon Copy"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You receive an email with 10 people on it. You only want the original sender to see your response. What do you click?", options: ["Reply All", "Forward", "Reply", "New Email"], correctIndex: 2 }, 3: { level: "Intermediate", task: "How do you stop receiving notifications for a long, irrelevant email chain you are CC'd on, without deleting it?", options: ["Block the sender", "Click 'Ignore' or 'Mute Conversation'", "Create a rule to delete all emails", "Reply asking them to stop"], correctIndex: 1 }}},
+            { id: 14, domain: 'Basic Security', context: "Threat Awareness", tiers: { 1: { level: "Beginner", task: "What is a 'Phishing' email?", options: ["An email with a large attachment", "A scam designed to trick you into revealing passwords or sensitive info", "An email that went to spam by mistake", "An automated marketing newsletter"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You get an urgent email from 'IT Support' asking you to click a link and log in. Best first step?", options: ["Click it quickly", "Hover over the sender's name to check their actual email address", "Forward it to your personal email", "Reply with your password to save time"], correctIndex: 1 }, 3: { level: "Intermediate", task: "Which file attachment is the most dangerous to double-click from an unknown sender?", options: ["invoice.txt", "invoice.jpg", "invoice.exe or invoice.zip", "invoice.pdf"], correctIndex: 2 }}},
+            { id: 15, domain: 'Browser & Web', context: "Navigating the Web", tiers: { 1: { level: "Beginner", task: "You accidentally closed a very important browser tab. Shortcut to reopen it?", options: ["Ctrl+Z", "Ctrl+Shift+T", "Alt+F4", "F5"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you quickly save a webpage to read later?", options: ["Print it", "Bookmark it (Ctrl+D / Cmd+D)", "Take a screenshot of the whole page", "Copy all text to Notepad"], correctIndex: 1 }, 3: { level: "Intermediate", task: "A website looks completely broken, but your coworker sees it fine. First troubleshooting step?", options: ["Buy a new router", "Clear your browser cache/cookies or try Incognito mode", "Update Windows", "Change your DNS"], correctIndex: 1 }}},
+            { id: 16, domain: 'OS Troubleshooting', context: "Fixing Basic Issues", tiers: { 1: { level: "Beginner", task: "An application has completely frozen and won't close. What do you do?", options: ["Unplug the computer", "Open Task Manager (Ctrl+Shift+Esc) and 'End Task'", "Press the power button repeatedly", "Wait an hour"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You plug in a second monitor but it just shows the exact same screen as your laptop. How do you fix this?", options: ["Buy a different cable", "Display Settings -> Change 'Duplicate' to 'Extend'", "Reboot the computer", "Turn the monitor off and on"], correctIndex: 1 }, 3: { level: "Intermediate", task: "Your computer has no internet, but your phone on the same Wi-Fi does. Best quick fix attempt?", options: ["Call the ISP", "Disable and re-enable your computer's Wi-Fi adapter", "Change your IP address manually", "Format the hard drive"], correctIndex: 1 }}},
+            { id: 17, domain: 'PDF Management', context: "Document Formats", tiers: { 1: { level: "Beginner", task: "What is the primary reason to send a client a PDF instead of a Word document?", options: ["PDFs are smaller", "PDFs preserve formatting and prevent easy editing", "PDFs have better colors", "Word docs cost money to open"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you turn a Word document into a PDF natively?", options: ["Print it and scan it", "File -> Save As -> Select PDF format", "Change the file extension by renaming it", "Use an online converter website"], correctIndex: 1 }, 3: { level: "Intermediate", task: "If you need to extract text from a scanned image PDF (not a text PDF), what technology is required?", options: ["Formatting", "OCR (Optical Character Recognition)", "Macro extraction", "HTML Conversion"], correctIndex: 1 }}},
+            { id: 18, domain: 'Virtual Meetings (Teams/Zoom)', context: "Remote Work", tiers: { 1: { level: "Beginner", task: "What is the golden rule of joining a large virtual meeting?", options: ["Turn on your camera", "Mute your microphone unless you are speaking", "Share your screen immediately", "Use a funny background"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You want to show a PowerPoint in a meeting, but you don't want the audience to see your messy desktop or email notifications. What do you share?", options: ["Share 'Entire Screen'", "Share the specific 'Application Window' (PowerPoint)", "Share a file link", "Use a second camera"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You are sharing a video in the meeting, but the audience says they can't hear the video audio. Why?", options: ["Their speakers are broken", "You forgot to check 'Share System Audio' when selecting what to share", "Your microphone is muted", "The video format is wrong"], correctIndex: 1 }}},
+            { id: 19, domain: 'Keyboard Efficiency', context: "Shortcuts", tiers: { 1: { level: "Beginner", task: "What does Ctrl+Z (or Cmd+Z) do?", options: ["Zoom in", "Undo the last action", "Save the file", "Select everything"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you quickly switch between multiple open applications?", options: ["Minimize them one by one", "Alt+Tab (or Cmd+Tab)", "Press the Windows key", "Use the mouse wheel"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You are typing a document and want to quickly move the cursor to the very end of the line without using the mouse.", options: ["Hold the right arrow key", "Press the 'End' key", "Press Page Down", "Ctrl+Right Arrow"], correctIndex: 1 }}},
+            { id: 20, domain: 'Basic AI Usage', context: "Prompting Basics", tiers: { 1: { level: "Beginner", task: "If you want an AI (like ChatGPT) to fix a poorly written email, what is the best prompt?", options: ["'Fix this.'", "'Rewrite this email to sound professional and polite: [paste text]'", "'Make it better.'", "'Write an email'"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "The AI gave you an answer that is way too long. How do you refine it?", options: ["Start a new chat", "Tell it: 'Condense that into 3 short bullet points'", "Scroll past it", "Say 'Wrong'"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need the AI to format data so you can easily paste it into Excel. What should you ask?", options: ["'Format nicely'", "'Output this data strictly as a Markdown table'", "'Put it in a spreadsheet'", "'Make columns'"], correctIndex: 1 }}},
+            
+            // Extending 21-40 with variations of intermediate concepts
+            { id: 21, domain: 'Excel Logic', context: "Nested Decisions", tiers: { 1: { level: "Beginner", task: "To find the highest number in a column, use:", options: ["=TOP()", "=MAX()", "=HIGH()", "=GREATEST()"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "To count how many cells contain text (ignoring blank ones), use:", options: ["=COUNT()", "=COUNTA()", "=COUNTBLANK()", "=SUM()"], correctIndex: 1 }, 3: { level: "Intermediate", task: "To count how many times the word 'Completed' appears in a status column, use:", options: ["=COUNT()", "=COUNTIF(Range, \"Completed\")", "=SUMIF(Range, \"Completed\")", "=MATCH(\"Completed\")"], correctIndex: 1 }}},
+            { id: 22, domain: 'Excel Dates', context: "Time Math", tiers: { 1: { level: "Beginner", task: "How do you insert the current date so it updates automatically tomorrow?", options: ["Type today's date", "=NOW()", "=TODAY()", "=CURRENT()"], correctIndex: 2 }, 2: { level: "Adv. Beginner", task: "If A1 is a date, how do you find the date exactly 30 days from then?", options: ["=A1 + 30", "=DATE(A1, 30)", "=ADD_DAYS(A1, 30)", "=A1 & 30"], correctIndex: 0 }, 3: { level: "Intermediate", task: "How do you calculate the number of workdays (ignoring weekends) between two dates?", options: ["=B1 - A1", "=NETWORKDAYS(A1, B1)", "=DAYS(B1, A1) - 2", "=WORK(A1, B1)"], correctIndex: 1 }}},
+            { id: 23, domain: 'Excel Formatting', context: "Visual Clarity", tiers: { 1: { level: "Beginner", task: "To make a number look like currency ($1,000.00), you:", options: ["Type the $ manually", "Click the '$' formatting button on the Home tab", "Change font to Arial", "Use Conditional Formatting"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You type '00123' into a cell, but Excel changes it to '123'. How do you keep the leading zeros?", options: ["Format the cell as 'Text' before typing", "Add a space after it", "Use =ZERO(123)", "It's impossible"], correctIndex: 0 }, 3: { level: "Intermediate", task: "How do you apply the exact same color, border, and font styling from cell A1 to cell G10 instantly?", options: ["Write down the hex codes", "Select A1, click 'Format Painter', then click G10", "Copy A1, Paste Normal", "Save as a Style"], correctIndex: 1 }}},
+            { id: 24, domain: 'Word Tables', context: "Data in Docs", tiers: { 1: { level: "Beginner", task: "How do you add a new row to the bottom of a Word table?", options: ["Insert a new table", "Click in the bottom-right cell and press 'Tab'", "Draw it with the pen tool", "Press Enter multiple times"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you merge two cells together in a Word table?", options: ["Delete the border line", "Select both -> Right Click -> Merge Cells", "Use the 'Group' tool", "Format Painter"], correctIndex: 1 }, 3: { level: "Intermediate", task: "Your table spans across three pages. How do you make the column headers repeat at the top of every page?", options: ["Copy and paste the header row manually on each page", "Select Header Row -> Layout -> Repeat Header Rows", "Put the table in the document Header", "Split the table"], correctIndex: 1 }}},
+            { id: 25, domain: 'Printing Basics', context: "Physical Output", tiers: { 1: { level: "Beginner", task: "Shortcut to open the Print menu?", options: ["Ctrl+P", "Alt+P", "Shift+P", "F12"], correctIndex: 0 }, 2: { level: "Adv. Beginner", task: "You only want to print page 3 and 5 of a 10-page document. Under pages, type:", options: ["3-5", "3, 5", "3 and 5", "Page 3 Page 5"], correctIndex: 1 }, 3: { level: "Intermediate", task: "In Excel, a wide spreadsheet prints across 4 pages making it unreadable. Quickest fix?", options: ["Make font size 6", "Page Layout -> Scale to Fit -> 'Fit to 1 page wide'", "Delete columns", "Hide rows"], correctIndex: 1 }}},
+            { id: 26, domain: 'PPT Media', context: "Engaging Slides", tiers: { 1: { level: "Beginner", task: "How do you add a video to a slide?", options: ["Drag and drop or Insert -> Video", "Copy paste a YouTube link in text", "Insert -> Object", "Change slide background"], correctIndex: 0 }, 2: { level: "Adv. Beginner", task: "You inserted a picture, but it's too dark. How do you brighten it inside PPT?", options: ["Export to Photoshop", "Picture Format -> Corrections -> Adjust Brightness", "Add a white semi-transparent box over it", "Change the slide theme"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You have a square photo but you want it to be perfectly circular. How?", options: ["Crop it manually by eye", "Picture Format -> Crop -> Crop to Shape -> Oval/Circle", "Draw a circle and group them", "Not possible in PPT"], correctIndex: 1 }}},
+            { id: 27, domain: 'Email Organization', context: "Inbox Zero", tiers: { 1: { level: "Beginner", task: "What does marking an email as 'Unread' do?", options: ["Deletes it", "Makes it bold again so you remember to handle it later", "Sends it back to the sender", "Moves it to Spam"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you find an email from 'Sarah' with an attachment from last month?", options: ["Scroll down for 5 minutes", "Search: 'Sarah' and click the 'Has Attachment' filter", "Sort entire inbox by sender", "Check the 'Deleted' folder"], correctIndex: 1 }, 3: { level: "Intermediate", task: "How do you automatically move all emails with the word 'Newsletter' into a specific folder?", options: ["Create an Inbox Rule / Filter", "Reply and ask them to change the subject", "Drag and drop them daily", "Use CC"], correctIndex: 0 }}},
+            { id: 28, domain: 'Identity Security', context: "Protecting Access", tiers: { 1: { level: "Beginner", task: "Which of these is the most secure password?", options: ["admin123", "password", "DogName2023", "b!7K#m9P$qR2"], correctIndex: 3 }, 2: { level: "Adv. Beginner", task: "What does Multi-Factor Authentication (MFA/2FA) do?", options: ["Requires a password AND a second verification (like a phone code)", "Lets two people share an account", "Encrypts your hard drive", "Makes your password twice as long"], correctIndex: 0 }, 3: { level: "Intermediate", task: "What is the primary benefit of using a Password Manager (like Bitwarden or 1Password)?", options: ["It remembers one password for all sites", "It generates and stores unique, complex passwords for every site, requiring you to remember only one master password", "It bypasses 2FA", "It stops viruses"], correctIndex: 1 }}},
+            { id: 29, domain: 'OS Efficiency', context: "Screen Management", tiers: { 1: { level: "Beginner", task: "How do you quickly minimize all windows to see the desktop?", options: ["Click the minimize minus (-) on every window", "Windows Key + D (or Mac Cmd+F3)", "Restart the computer", "Turn off the monitor"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you snap two windows side-by-side perfectly?", options: ["Drag their edges manually", "Drag a window to the far left/right edge of the screen (or Win+Left Arrow)", "Use dual monitors", "Minimize everything else"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need to capture a specific error message box, not your whole screen. Best tool?", options: ["Print Screen button", "Snipping Tool (Win+Shift+S) or Cmd+Shift+4", "Take a photo with your phone", "Save as PDF"], correctIndex: 1 }}},
+            { id: 30, domain: 'Cloud Sharing', context: "Link Permissions", tiers: { 1: { level: "Beginner", task: "If you email a OneDrive 'Link', what are you sending?", options: ["A copy of the file", "A shortcut access pass to the original file in the cloud", "A virus", "A PDF version"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You want someone to read your document, but NOT change it. Which link setting do you choose?", options: ["Anyone with the link can Edit", "Anyone with the link can View", "Restricted", "Public on the web"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You shared a folder with 'View' access. If you later put a new file into that folder, what happens?", options: ["They can edit the new file", "They cannot see the new file", "They can automatically see the new file with 'View' access", "The folder breaks"], correctIndex: 2 }}},
+            
+            // Final 10 targeting general digital fluency
+            { id: 31, domain: 'Excel Checking', context: "Data Integrity", tiers: { 1: { level: "Beginner", task: "What does 'Sort A to Z' do?", options: ["Randomizes data", "Alphabetizes text or orders numbers lowest to highest", "Highlights duplicates", "Deletes empty rows"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you quickly find and highlight duplicate values in a column?", options: ["Sort and look for them", "Conditional Formatting -> Highlight Cell Rules -> Duplicate Values", "Use =FIND()", "Data Validation"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You applied a filter to a table, and now row numbers skip from 4 to 10. Why?", options: ["The data was deleted", "Rows 5-9 didn't match the filter criteria and are temporarily hidden", "The file is corrupted", "Someone grouped the rows"], correctIndex: 1 }}},
+            { id: 32, domain: 'Word Reviewing', context: "Feedback Loops", tiers: { 1: { level: "Beginner", task: "How do you leave a note for a coworker on a specific sentence?", options: ["Type it in bold red text", "Select text -> Insert Comment", "Change the font size", "Put it in a footnote"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you suggest edits to a document so the owner can accept or reject them?", options: ["Turn on 'Track Changes' under the Review tab", "Use a red font", "Save as a new version", "Use the Highlighter tool"], correctIndex: 0 }, 3: { level: "Intermediate", task: "You received a document back with dozens of tracked changes. How do you finalize it?", options: ["Manually delete the red text", "Review tab -> 'Accept All Changes' or review them one by one", "Save as PDF", "Turn off track changes"], correctIndex: 1 }}},
+            { id: 33, domain: 'PPT Architecture', context: "Visual Hierarchy", tiers: { 1: { level: "Beginner", task: "Which is better for presentation readability?", options: ["Lots of text", "Large fonts and bullet points", "Neon colors", "Using 10 different fonts"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you align three shapes so they are perfectly straight?", options: ["Drag them carefully", "Select all -> Shape Format -> Align -> Align Middle/Center", "Draw a line and place them on it", "Use a table"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You need a shape to sit BEHIND your text box. How?", options: ["Delete the shape", "Right-click shape -> Send to Back", "Right-click text -> Send to Back", "Make the shape transparent"], correctIndex: 1 }}},
+            { id: 34, domain: 'Web Searching', context: "Advanced Querying", tiers: { 1: { level: "Beginner", task: "If you search 'Apple' and only get the fruit, how do you find the tech company?", options: ["You can't", "Search 'Apple tech company' or 'Apple iPhone'", "Search images", "Use Bing"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "How do you search for an exact phrase on Google?", options: ["Put it in quotes (e.g., \"error code 404\")", "Use ALL CAPS", "Add a hashtag", "Bold the text"], correctIndex: 0 }, 3: { level: "Intermediate", task: "How do you search for an Excel template but EXCLUDE results from Pinterest?", options: ["Excel template NOT Pinterest", "Excel template -pinterest", "Excel template no pinterest", "Advanced Search menu only"], correctIndex: 1 }}},
+            { id: 35, domain: 'Basic Hardware', context: "Connections", tiers: { 1: { level: "Beginner", task: "Which cable is commonly used to connect a laptop to a projector or monitor?", options: ["Ethernet", "HDMI", "Power cable", "Audio jack"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "Your wireless mouse stops working. First troubleshooting step?", options: ["Buy a new one", "Replace the batteries and check the USB receiver", "Update Windows", "Restart the router"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You plug a USB drive in but it doesn't appear in 'My Computer/This PC'. Possible reason?", options: ["The USB is upside down", "The drive format is incompatible or the partition is corrupted", "You need internet", "The mouse is unplugged"], correctIndex: 1 }}},
+            { id: 36, domain: 'App Integration', context: "Copy/Paste Mechanics", tiers: { 1: { level: "Beginner", task: "Shortcut for Copy and Paste?", options: ["Ctrl+C / Ctrl+V", "Ctrl+X / Ctrl+V", "Ctrl+A / Ctrl+S", "Ctrl+P / Ctrl+V"], correctIndex: 0 }, 2: { level: "Adv. Beginner", task: "You copy text from a website into Word, and it brings in weird fonts and blue backgrounds. How do you prevent this?", options: ["You can't", "Right click -> Paste Options -> 'Keep Text Only' (or Ctrl+Shift+V)", "Change the theme", "Delete the background manually"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You want an Excel chart in Word to update automatically if the Excel file changes.", options: ["Paste it as an image", "Copy -> Paste Special -> Paste Link", "Take a screenshot", "Use a Macro"], correctIndex: 1 }}},
+            { id: 37, domain: 'Software Updates', context: "System Maintenance", tiers: { 1: { level: "Beginner", task: "Why does your computer ask to restart for updates?", options: ["To annoy you", "To install security patches and bug fixes", "To clear the hard drive", "To save battery"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "A website tells you your browser is 'out of date'. What should you do?", options: ["Ignore it", "Go to browser Settings -> About (Chrome/Edge) to trigger an update", "Buy a new computer", "Turn off the firewall"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You installed an update and now an app keeps crashing. What is the safest recovery?", options: ["Delete the app folder manually", "Use 'System Restore' or uninstall the specific update", "Format the hard drive", "Turn off antivirus"], correctIndex: 1 }}},
+            { id: 38, domain: 'Communication Tools', context: "Slack/Teams Logic", tiers: { 1: { level: "Beginner", task: "In a chat app, what does the '@' symbol do?", options: ["Sends an email", "Tags/Mentions a specific person to notify them directly", "Makes text bold", "Adds an attachment"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "You want to let coworkers know you are in a meeting and shouldn't be disturbed.", options: ["Log off", "Change your Status/Presence to 'Do Not Disturb' or 'Busy'", "Ignore messages", "Send a mass email"], correctIndex: 1 }, 3: { level: "Intermediate", task: "Instead of typing 5 different short messages triggering 5 notifications, what is better etiquette?", options: ["Call them", "Type your full thought into a single message using Shift+Enter for line breaks before sending", "Send voice notes", "Use emojis only"], correctIndex: 1 }}},
+            { id: 39, domain: 'Data Formats', context: "Recognizing Files", tiers: { 1: { level: "Beginner", task: "Which of these is a picture file?", options: [".docx", ".xlsx", ".jpg or .png", ".mp4"], correctIndex: 2 }, 2: { level: "Adv. Beginner", task: "What opens a .CSV file by default?", options: ["Word", "Excel (or another spreadsheet program)", "PowerPoint", "Media Player"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You downloaded a '.zip' file containing photos. How do you view them normally?", options: ["Double-click the zip to view them instantly", "Right-click -> 'Extract All' to unpack them into a normal folder first", "Change the extension to .jpg", "Open it in Word"], correctIndex: 1 }}},
+            { id: 40, domain: 'AI Ethics & Review', context: "Responsible Tech", tiers: { 1: { level: "Beginner", task: "If an AI generates an email for you, what should you do before sending?", options: ["Send it immediately", "Read it to ensure it is accurate and sounds like you", "Delete it", "Translate it"], correctIndex: 1 }, 2: { level: "Adv. Beginner", task: "What is an 'AI Hallucination'?", options: ["When the AI breaks", "When the AI confidently presents false or made-up information as fact", "When the screen flashes", "When it writes code"], correctIndex: 1 }, 3: { level: "Intermediate", task: "You want to use AI to summarize financial data. What is the security risk?", options: ["It costs money", "Inputting sensitive/confidential company data into a public AI can violate security policies", "It takes too long", "The AI might delete your files"], correctIndex: 1 }}}
         ];
 
         // --- STATE MANAGEMENT ---
         let candidateName = '';
         let currentMissionIndex = 0;
         let currentTier = 1;
-        let timeLeft = 120; // 2 minutes
+        let timeLeft = 1800; // 30 minutes
         let timerInterval = null;
         let questionStartTime = null;
         
@@ -252,15 +316,14 @@
         };
 
         // --- CORE FUNCTIONS ---
-
         function switchScreen(screenName) {
             Object.values(screens).forEach(s => s.classList.add('hidden'));
             screens[screenName].classList.remove('hidden');
             
             // Re-trigger fade-in animation
-            screens[screenName].classList.remove('fade-in');
+            screens[screenName].classList.remove('animate-fade-in');
             void screens[screenName].offsetWidth; // trigger reflow
-            screens[screenName].classList.add('fade-in');
+            screens[screenName].classList.add('animate-fade-in');
         }
 
         function formatTime(seconds) {
@@ -275,10 +338,13 @@
             
             timeDisplay.textContent = formatTime(timeLeft);
 
-            if (timeLeft < 30) {
-                timerContainer.className = 'px-4 py-2 rounded-lg border bg-rose-500/10 border-rose-500/50 text-rose-400 animate-pulse transition-colors';
+            if (timeLeft < 60) {
+                // Panic mode last 60 seconds
+                timerContainer.classList.add('bg-rose-100', 'border-rose-300', 'text-rose-700', 'dark:bg-rose-500/10', 'dark:border-rose-500/50', 'dark:text-rose-400', 'animate-pulse');
+                timerContainer.classList.remove('bg-slate-50', 'border-slate-200', 'dark:bg-slate-900', 'dark:border-slate-700');
             } else {
-                timerContainer.className = 'px-4 py-2 rounded-lg border bg-slate-900 border-slate-700 transition-colors';
+                timerContainer.classList.remove('bg-rose-100', 'border-rose-300', 'text-rose-700', 'dark:bg-rose-500/10', 'dark:border-rose-500/50', 'dark:text-rose-400', 'animate-pulse');
+                timerContainer.classList.add('bg-slate-50', 'border-slate-200', 'dark:bg-slate-900', 'dark:border-slate-700');
             }
         }
 
@@ -308,8 +374,8 @@
             const tierIndicators = document.getElementById('tier-indicators');
             tierIndicators.innerHTML = '';
             for (let i = 1; i <= 3; i++) {
-                const colorClass = i <= currentTier ? 'bg-indigo-500' : 'bg-slate-700';
-                tierIndicators.innerHTML += `<div class="h-2 w-4 rounded-sm ${colorClass}"></div>`;
+                const colorClass = i <= currentTier ? 'bg-indigo-600 dark:bg-indigo-500' : 'bg-slate-300 dark:bg-slate-700';
+                tierIndicators.innerHTML += `<div class="h-2 w-4 rounded-sm ${colorClass} transition-colors"></div>`;
             }
 
             // Update Briefing
@@ -324,11 +390,11 @@
             
             tierData.options.forEach((optionText, index) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-indigo-600/20 hover:border-indigo-500 transition-all group flex items-center justify-between";
+                btn.className = "w-full text-left p-4 rounded-xl border bg-white border-slate-300 hover:bg-indigo-50 hover:border-indigo-400 text-slate-700 dark:bg-slate-800/50 dark:border-slate-600 dark:hover:bg-indigo-600/20 dark:hover:border-indigo-500 dark:text-slate-200 dark:hover:text-white transition-all group flex items-center justify-between shadow-sm";
                 btn.innerHTML = `
-                    <span class="font-medium text-slate-200 group-hover:text-white">${optionText}</span>
-                    <div class="w-6 h-6 rounded-full border border-slate-500 group-hover:border-indigo-400 flex items-center justify-center transition-colors">
-                        <div class="w-2 h-2 rounded-full bg-transparent group-hover:bg-indigo-400 transition-colors"></div>
+                    <span class="font-medium pr-4 leading-relaxed">${optionText}</span>
+                    <div class="flex-shrink-0 w-6 h-6 rounded-full border border-slate-300 dark:border-slate-500 group-hover:border-indigo-500 dark:group-hover:border-indigo-400 flex items-center justify-center transition-colors">
+                        <div class="w-2 h-2 rounded-full bg-transparent group-hover:bg-indigo-500 dark:group-hover:bg-indigo-400 transition-colors"></div>
                     </div>
                 `;
                 btn.onclick = () => handleAnswer(index);
@@ -383,14 +449,15 @@
             const avgTime = metrics.speedLogs.length > 0 ? (sumTime / metrics.speedLogs.length) : 0;
             
             let logicRating = "Standard";
-            if (avgTier >= 2.5 && accuracy > 80) logicRating = "Elite (Systems Thinker)";
-            else if (avgTier >= 2 && accuracy > 60) logicRating = "Advanced (Capable Executor)";
-            else if (accuracy > 50) logicRating = "Intermediate (Requires Guidance)";
+            if (avgTier >= 2.5 && accuracy > 85) logicRating = "Solid Intermediate (Highly Capable)";
+            else if (avgTier >= 2 && accuracy > 65) logicRating = "Advanced Beginner (Reliable)";
+            else if (accuracy > 50) logicRating = "Beginner (Requires Guidance)";
             else logicRating = "Novice (Needs Fundamentals)";
 
+            // Avg target for 40 Qs in 30 mins is 45s per Q.
             let speedRating = "Average";
-            if (avgTime < 10) speedRating = "High Velocity";
-            else if (avgTime > 25) speedRating = "Deliberate/Slow";
+            if (avgTime < 25) speedRating = "High Velocity";
+            else if (avgTime > 45) speedRating = "Deliberate/Slow";
 
             return { 
                 accuracy: Math.round(accuracy), 
@@ -425,7 +492,7 @@
             candidateName = nameInput;
             currentMissionIndex = 0;
             currentTier = 1;
-            timeLeft = 120;
+            timeLeft = 1800; // Reset to 30 mins
             metrics = { correctAnswers: 0, totalAttempts: 0, tierTracking: [], speedLogs: [] };
             
             switchScreen('playing');
